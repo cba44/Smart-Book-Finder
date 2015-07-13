@@ -4,15 +4,15 @@
 
   <title>Shop Owner's Page</title>
   <meta name="description" content="My Parse App">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width"><!--
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css"> -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 </head>
 
 <body>
-  
+  <!--
   <div id="main">
     <h1>You're ready to use Parse!</h1>
 
@@ -37,30 +37,60 @@
         </code>
     </div>
   </div>
+  -->
+  <div name='registration' method="post" >
+    Book Name:<br>
+    <input type="text" name="bookname" id="bookname">
+    <br>
+    Bookshop:<br>
+    <input type="text" name="bookshop" id="bookshop">
+    <br><br>
+    <input type="button" value="Submit" onclick="addBook()">
+    <input type="button" value="Log Out" onclick="logout1()">
+  </div>
 
   <script type="text/javascript">
-    //Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
-    Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
-    
-    var GameScore = Parse.Object.extend("GameScore");
-    var gameScore = new GameScore();
+    //Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");    
 
-    gameScore.set("score", 1337);
-    gameScore.set("playerName", "Dan Stemkoski");
-    gameScore.set("cheatMode", false);
+    function addBook(){
 
-    gameScore.save(null, {
-      success: function(gameScore) {
-        // Execute any logic that should take place after the object is saved.
-        alert('New object created with objectId: ' + gameScore.id);
-      },
-      error: function(gameScore, error) {
-        // Execute any logic that should take place if the save fails.
-        // error is a Parse.Error with an error code and message.
-        alert('Failed to create new object, with error code: ' + error.message);
-      }
-    });
+      Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
+
+      var Books = Parse.Object.extend("Books");
+      var books = new Books();
+
+      var bookName = document.getElementById('bookname').value;
+      var bookShop = document.getElementById('bookshop').value;
+
+      books.set("BookName", bookName);
+      books.set("BookShop", bookShop);
+
+      books.save(null, {
+        success: function(books) {
+          // Execute any logic that should take place after the object is saved.
+          alert('Successfully added ' + bookName + ' to the database');
+        },
+        error: function(books, error) {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+    }
+
+    function logout1(){
+
+      Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
+
+      Parse.User.enableRevocableSession();
+      Parse.Session.isCurrentSessionRevocable();
+      Parse.User.logOut();
+      alert("Logout Successfully");
+
+    }
+
   </script>
+
 </body>
 
 </html>

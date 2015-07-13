@@ -5,14 +5,12 @@
   <title>Administrator's Page</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 </head>
 
 <body>
-  
+  <!--
   <div id="main">
     <h1>You're ready to use Parse!</h1>
 
@@ -37,7 +35,7 @@
         </code>
     </div>
   </div>
-
+-->
   <div name='registration' method="post" >
     User name:<br>
     <input type="text" name="username" id="username">
@@ -75,9 +73,9 @@
 Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
 Parse.User.enableRevocableSession();
 Parse.Session.isCurrentSessionRevocable();
-Parse.User.logOut();*/
+Parse.User.logOut();
 
-var currentUser = Parse.User.current();
+var currentUser = Parse.User.current();*/
     function log(){
 
       Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
