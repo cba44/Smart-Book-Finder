@@ -1,3 +1,37 @@
+
+  <?php
+    $dbhost = 'localhost';
+    $dbuser = 'root';
+    $dbpass = '';
+
+    $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+
+    if(! $conn )
+    {
+      die('Could not connect: ' . mysql_error());
+    }
+
+    $sql = 'SELECT * FROM mybooks';
+    mysql_select_db('books');
+    $retval = mysql_query( $sql, $conn );
+
+    if(! $retval )
+    {
+      die('Could not get data: ' . mysql_error());
+    }
+
+    $array = array();
+
+    while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+    {
+         $array[] = $row;
+    }
+
+    $length = sizeof($array);
+
+    mysql_close($conn);
+  ?>
+
 <!doctype html>
 <head>
   <meta charset="utf-8">
@@ -12,6 +46,7 @@
 </head>
 
 <body>
+
   <!--
   <div id="main">
     <h1>You're ready to use Parse!</h1>
@@ -38,7 +73,7 @@
     </div>
   </div>
   -->
-  <div name='registration' method="post" >
+  <div name='registration' method="post" ><!--
     Book Name:<br>
     <input type="text" name="bookname" id="bookname">
     <br>
@@ -50,8 +85,8 @@
     <br>
     Longitude:<br>
     <input type="text" name="longitude" id="longitude">
-    <br><br>
-    <input type="button" value="Submit" onclick="addBook()">
+    <br><br>-->
+    <input type="button" value="Update online database" onclick="addBook()">
     <input type="button" value="Log Out" onclick="logout1()">
   </div>
 
@@ -63,29 +98,40 @@
       Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
 
       var Books = Parse.Object.extend("Books");
-      var books = new Books();
+      
 
-      var bookName = document.getElementById('bookname').value;
-      var bookShop = document.getElementById('bookshop').value;
-      var longitude = document.getElementById('longitude').value;
-      var latitude = document.getElementById('latitude').value;
+      var jArray= <?php echo json_encode($array ); ?>;
+      var jlength = "<?php echo $length; ?>"
 
-      books.set("BookName", bookName);
-      books.set("BookShop", bookShop);
-      books.set("Longitude", longitude);
-      books.set("Latitude", latitude);
+      for(var i=0 ; i < jlength ; i++){
+          //alert(i);
+          var books = new Books();
 
-      books.save(null, {
-        success: function(books) {
-          // Execute any logic that should take place after the object is saved.
-          alert('Successfully added ' + bookName + ' to the database');
-        },
-        error: function(books, error) {
-          // Execute any logic that should take place if the save fails.
-          // error is a Parse.Error with an error code and message.
-          alert('Failed to create new object, with error code: ' + error.message);
-        }
-      });
+          var bookName = jArray[i].bookName;
+          var bookShop = jArray[i].bookShop;
+          var longitude = jArray[i].longitude;
+          var latitude = jArray[i].latitude;
+          //alert(bookName+' '+bookShop+' '+latitude+' '+longitude);
+
+          books.set("BookName", bookName);
+          books.set("BookShop", bookShop);
+          books.set("Longitude", longitude);
+          books.set("Latitude", latitude);
+
+          books.save(null, {
+            success: function(books) {
+              // Execute any logic that should take place after the object is saved.
+              //alert('Successfully added ' + bookName + ' to the database');
+            },
+            error: function(books, error) {
+              // Execute any logic that should take place if the save fails.
+              // error is a Parse.Error with an error code and message.
+              alert('Failed to create new object, with error code: ' + error.message);
+            }
+          });        
+
+      }
+      
     }
 
     function logout1(){
