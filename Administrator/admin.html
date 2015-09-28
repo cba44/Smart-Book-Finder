@@ -11,13 +11,51 @@
 
 <body>
 
+  <div>
+
+    User Name:<br>
+    <input type="text" name="uname" id="uname">
+    <br><br>
+
+    <input type="button" value="Delete User" onclick="delete()">
+    <input type="button" value="logout" onclick="logout()">
+
+  </div>
+
   <script type="text/javascript">
 
-    Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
+    function logout(){
 
-    Parse.User.enableRevocableSession();
-    Parse.Session.isCurrentSessionRevocable();
-    Parse.User.logOut();
+      Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
+
+
+
+      Parse.User.enableRevocableSession();
+      Parse.Session.isCurrentSessionRevocable();
+      Parse.User.logOut();
+
+    }
+
+    function delete(){
+
+      Parse.initialize("cDjCcIaSJQxY7pQY2tdeP6odtYqHhZLmonAzxTGn", "8KDvQuKiDonuv2LqZ1FEviCq0K3A5C6GCm3fWCio");
+
+      var name = document.getElementById('bookshop').value;
+
+
+      // After this, the playerName field will be empty
+      //Parse.User.unset("document.getElementById('bookshop').value;");
+      Parse.User.unset("ZHT4Hi1WPX");
+
+      // Saves the field deletion to the Parse Cloud
+      Parse.User.save();
+
+      alert("Delete successful" + name);
+
+
+    }
+
+
 
   </script>
 

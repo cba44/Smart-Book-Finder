@@ -128,9 +128,11 @@
               // error is a Parse.Error with an error code and message.
               alert('Failed to create new object, with error code: ' + error.message);
             }
-          });        
+          }); 
 
-      }
+               
+
+      }alert("Books added Successfully");  
       
     }
 
@@ -142,6 +144,8 @@
       Parse.Session.isCurrentSessionRevocable();
       Parse.User.logOut();
       alert("Logout Successfully");
+
+      window.open("blank.html","_self")
 
     }
 
